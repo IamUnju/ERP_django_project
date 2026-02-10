@@ -1,9 +1,13 @@
 from django.db import models
 from datetime import datetime
+from django.utils import timezone
+from apps.products.models.Product import ProductMaster
+from apps.products.models.MainCategory import MainCategoryMaster
+from apps.products.models.SubCategory import SubCategoryMaster
 
 class ProductsGRN_hdr(models.Model):
     sno = models.AutoField(primary_key=True)
-    grn_ref_no = models.CharField(unique=True,max_length=50)
+    grn_ref_no = models.CharField(unique=True,max_length=50,editable=True)
     grn_date = models.DateField(default=datetime.now)
     grn_source = models.CharField(max_length=50,null=True,blank=True)
     delivery_ref_no = models.CharField(max_length=50,null=True,blank=True)
@@ -20,56 +24,43 @@ class ProductsGRN_hdr(models.Model):
     created_date = models.DateTimeField(auto_now=True)
     modified_by = models.CharField(null=True,blank=True)
     modified_date = models.DateTimeField(auto_now_add=True)
+    
+    
         
 
 
 
-# class ProductsGRN_dtl(models.Model):
-#     USE [Store]
-# GO
+class ProductsGRN_dtl(models.Model):
+    sno = models.AutoField(primary_key=True)
+    grn_ref_no = models.ForeignKey(ProductsGRN_hdr,on_delete=models.SET_NULL,null=True,blank=True)
+    main_category_id = models.ForeignKey(MainCategoryMaster,on_delete=models.SET_NULL,null=True,blank=True)
+    sub_category_id = models.ForeignKey(SubCategoryMaster,on_delete=models.SET_NULL,null=True,blank=True)
+    product_id = models.ForeignKey(ProductMaster,on_delete=models.SET_NULL,null=True,blank=True)
+    total_packing = models.IntegerField(null=True,blank=True)
+    packing_type = models.CharField(max_length=50,null=True,blank=True)
+    no_pcs_per_packing = models.IntegerField(null=True,blank=True)
+    total_pcs = models.IntegerField(null=True,blank=True)
+    remarks = models.CharField(max_length=200,null=True,blank=True)
+    status_entry = models.CharField(max_length=50,null=True,blank=True)
+    created_by = models.CharField(max_length=50,null=True,blank=True)
+    created_date = models.DateTimeField(auto_now=True)
+    modified_by = models.CharField(max_length=50,null=True,blank=True)
+    modified_date = models.DateTimeField(auto_now_add=True)
+    stock_pcs = models.IntegerField(null=True,blank=True)
+    order_no = models.CharField(max_length=50,null=True,blank=True)
+    packed_kg = models.FloatField(null=True,blank=True)
+    lot_dtl_no = models.CharField(max_length=50,null=True,blank=True)
+    bar_code_ref_no = models.CharField(max_length=100,null=True,blank=True)
+    rate_per_pcs = models.FloatField(null=True,blank=True)
+    total_product_price = models.FloatField(null=True,blank=True)
+    currency = models.CharField(max_length=20,null=True,blank=True)
+    exchange_rate = models.FloatField(null=True,blank=True)
+    expiry_date = models.DateField(null=True,blank=True)
+    po_ref_no = models.CharField(max_length=50,null=True,blank=True)
+    rack_id = models.CharField(max_length=50,null=True,blank=True)
+    alternate_packing_type = models.CharField(max_length=50,null=True,blank=True)
 
-# SELECT [Sno]
-#       ,[GRN_Ref_No]
-#       ,[Main_Category_Id]
-#       ,[Sub_Category_Id]
-#       ,[Product_Id]
-#       ,[Total_Packing]
-#       ,[Packing_Type]
-#       ,[No_Pcs_Per_Packing]
-#       ,[Total_Pcs]
-#       ,[Remarks]
-#       ,[Status_Entry]
-#       ,[Created_By]
-#       ,[Created_Date]
-#       ,[Created_Mac_Address]
-#       ,[Modified_By]
-#       ,[Modified_Date]
-#       ,[Modified_Mac_Address]
-#       ,[Stock_Pcs]
-#       ,[Order_No]
-#       ,[Packed_KG]
-#       ,[Lot_Dtl_No]
-#       ,[Bar_Code_Ref_No]
-#       ,[Rate_Per_Pcs]
-#       ,[Total_Product_Price]
-#       ,[Currency]
-#       ,[Exchange_Rate]
-#       ,[Expiry_Date]
-#       ,[PO_Ref_NO]
-#       ,[RACK_ID]
-#       ,[Alternate_Packing_Type]
-#       ,[Truck_Id]
-#       ,[SECTION_ID]
-#       ,[MACHINE_ID]
-#       ,[PALLET_ID]
-#       ,[PURCHASE_BARCODE_REF_NO]
-#       ,[Po_Number]
-#       ,[Yard_Point]
-#       ,[Product_Serial_No]
-#       ,[Container_No]
-#   FROM [StoEntries].[tbl_Goods_Inward_GRN_Dtl]
 
-# GO
 
 
 
