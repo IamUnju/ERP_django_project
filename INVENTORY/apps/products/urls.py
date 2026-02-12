@@ -5,5 +5,6 @@ urlpatterns = [
     path('CreateMainCategory/',productViews.CreateMainCategory.as_view()),
     path('CreateSubCategory/',productViews.CreateSubCategory.as_view()),
     path('CreateProducts/',productViews.CreateProductMaster.as_view()),
-    path('CreateGRN/',ProductGRNView.CreateProductGRN_hdr.as_view())
+    path('CreateGRN/',ProductGRNView.CreateProductGRN_hdr.as_view()),
+    path('CreateGRnDetals/',ProductGRNView.CreatedProductGRN_Details.as_view())
 ]
