@@ -1,6 +1,10 @@
-import React from "react";
+import React from "react"
+import UserProfile from "../component/profile"
 
-function HomePage () {
-    return(<>this is Home Page here</>)
+const Homepage = () =>{
+    return(
+    <>
+    
+    THis is the home page</>)
 }
-export default HomePage
+export default Homepage

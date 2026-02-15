@@ -1,9 +1,11 @@
-import { useState } from 'react'
-import AppRouter from './router/router'
+import React from "react"
+import AppRouter from "./routers/routerapp"
+
 function App() {
 
   return (
-    <AppRouter/>
+    <AppRouter/>      
+    
   )
 }
 

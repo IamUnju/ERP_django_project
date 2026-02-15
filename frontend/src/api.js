@@ -1,26 +1,39 @@
-import axios from 'axios';
-import { REFRESH_TOKEN,ACCESS_TOKEN,MAIN_URL } from './constant';
+import axios from 'axios'
+import { REFRESH_TOKEN,ACCESS_TOKEN,BASE_URL } from './constant'
+
+
 
 const api = axios.create({
-    baseURL:MAIN_URL,
-    headers :{
-        'Content-Type':'application/json'
+    baseURL:BASE_URL,
+    headers:{
+        'content-type':'application/json'
     }
 })
 
-api.interceptors.request.use(
+
+api.interceptors.request.use(  
     (config)=>{
-        const token = localStorage.getItem(ACCESS_TOKEN)
-        if(token){
-            config.headers.Authorization = `Bearer ${token}`
-        }
-        return config
+     const token = localStorage.getItem(ACCESS_TOKEN)
+     if(token){
+        config.headers.Authorization = `Bearer ${token}`
+     }
+     return config
     },
-    
-    (error)=>{
+    (error) => {
         return Promise.reject(error)
-    }
+    }   
 )
 
-api
-export default api;
+api.interceptors.response.use(
+    (response)=>{
+        return response
+    },
+    (error)=>{
+        const {response} = error
+        if(response.status === 401){
+            localStorage.removeItem(ACCESS_TOKEN)
+        }
+        throw error     
+    }
+ )  
+export default api
